@@ -78,3 +78,4 @@ work_dir = './work_dirs/stgcn_80e_ntu60_xsub_keypoint/'
 load_from = None
 resume_from = None
 workflow = [('train', 1)]
+gpu_ids = range(0, 1)
