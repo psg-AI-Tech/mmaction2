@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 model = dict(
     type='Recognizer3D',
     backbone=dict(
@@ -126,3 +127,4 @@ work_dir = './work_dirs/posec3d/slowonly_r50_u48_240e_ntu60_xsub_keypoint'
 load_from = None
 resume_from = None
 find_unused_parameters = False
+gpu_ids = range(0, 1)

@@ -69,8 +69,10 @@ def build_model(cfg, train_cfg=None, test_cfg=None):
     obj_type = args.pop('type')
     if obj_type in LOCALIZERS:
         return build_localizer(cfg)
+        pass
     if obj_type in RECOGNIZERS:
         return build_recognizer(cfg, train_cfg, test_cfg)
+        pass
     if obj_type in DETECTORS:
         if train_cfg is not None or test_cfg is not None:
             warnings.warn(
@@ -78,7 +80,7 @@ def build_model(cfg, train_cfg=None, test_cfg=None):
                 'please specify them in model. Details see this '
                 'PR: https://github.com/open-mmlab/mmaction2/pull/629',
                 UserWarning)
-        return build_detector(cfg, train_cfg, test_cfg)
+        # return build_detector(cfg, train_cfg, test_cfg)
     model_in_mmdet = ['FastRCNN']
     if obj_type in model_in_mmdet:
         raise ImportError(

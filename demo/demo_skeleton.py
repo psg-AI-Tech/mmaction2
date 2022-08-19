@@ -119,14 +119,17 @@ def frame_extraction(video_path, short_side):
     flag, frame = vid.read()
     cnt = 0
     new_h, new_w = None, None
+    # cv2.namedWindow('test',0)
     while flag:
         if new_h is None:
             h, w, _ = frame.shape
             new_w, new_h = mmcv.rescale_size((w, h), (short_side, np.Inf))
-
+            
+        # cv2.imshow("test",frame)
         frame = mmcv.imresize(frame, (new_w, new_h))
-
+        
         frames.append(frame)
+        
         frame_path = frame_tmpl.format(cnt + 1)
         frame_paths.append(frame_path)
 

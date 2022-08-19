@@ -18,15 +18,15 @@ from mmaction.utils import (build_ddp, build_dp, default_device,
                             register_module_hooks, setup_multi_processes)
 
 # TODO import test functions from mmcv and delete them from mmaction2
-try:
-    from mmcv.engine import multi_gpu_test, single_gpu_test
-except (ImportError, ModuleNotFoundError):
-    warnings.warn(
-        'DeprecationWarning: single_gpu_test, multi_gpu_test, '
-        'collect_results_cpu, collect_results_gpu from mmaction2 will be '
-        'deprecated. Please install mmcv through master branch.')
-    from mmaction.apis import multi_gpu_test, single_gpu_test
-
+# try:
+#     from mmcv.engine import multi_gpu_test, single_gpu_test
+# except (ImportError, ModuleNotFoundError):
+#     warnings.warn(
+#         'DeprecationWarning: single_gpu_test, multi_gpu_test, '
+#         'collect_results_cpu, collect_results_gpu from mmaction2 will be '
+#         'deprecated. Please install mmcv through master branch.')
+#     from mmaction.apis import multi_gpu_test, single_gpu_test
+from mmaction.apis import multi_gpu_test, single_gpu_test
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -169,7 +169,7 @@ def inference_pytorch(args, cfg, distributed, data_loader):
                 broadcast_buffers=False))
         outputs = multi_gpu_test(model, data_loader, args.tmpdir,
                                  args.gpu_collect)
-
+        pass
     return outputs
 
 
@@ -347,13 +347,16 @@ def main():
     data_loader = build_dataloader(dataset, **dataloader_setting)
 
     if args.tensorrt:
-        outputs = inference_tensorrt(args.checkpoint, distributed, data_loader,
-                                     dataloader_setting['videos_per_gpu'])
+        # outputs = inference_tensorrt(args.checkpoint, distributed, data_loader,
+                                    #  dataloader_setting['videos_per_gpu'])
+        pass
     elif args.onnx:
-        outputs = inference_onnx(args.checkpoint, distributed, data_loader,
-                                 dataloader_setting['videos_per_gpu'])
+        # outputs = inference_onnx(args.checkpoint, distributed, data_loader,
+        #                          dataloader_setting['videos_per_gpu'])
+        pass
     else:
         outputs = inference_pytorch(args, cfg, distributed, data_loader)
+        pass
 
     rank, _ = get_dist_info()
     if rank == 0:

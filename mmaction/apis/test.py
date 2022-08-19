@@ -1,3 +1,6 @@
+import cv2
+
+from PIL import Image
 # Copyright (c) OpenMMLab. All rights reserved.
 import os.path as osp
 import pickle
@@ -11,17 +14,17 @@ import torch
 import torch.distributed as dist
 from mmcv.runner import get_dist_info
 
-try:
-    from mmcv.engine import (collect_results_cpu, collect_results_gpu,
-                             multi_gpu_test, single_gpu_test)
-    from_mmcv = True
-except (ImportError, ModuleNotFoundError):
-    warnings.warn(
-        'DeprecationWarning: single_gpu_test, multi_gpu_test, '
-        'collect_results_cpu, collect_results_gpu from mmaction2 will be '
-        'deprecated. Please install mmcv through master branch.')
-    from_mmcv = False
-
+# try:
+#     from mmcv.engine import (collect_results_cpu, collect_results_gpu,
+#                              multi_gpu_test, single_gpu_test)
+#     from_mmcv = True
+# except (ImportError, ModuleNotFoundError):
+#     warnings.warn(
+#         'DeprecationWarning: single_gpu_test, multi_gpu_test, '
+#         'collect_results_cpu, collect_results_gpu from mmaction2 will be '
+#         'deprecated. Please install mmcv through master branch.')
+#     from_mmcv = False
+from_mmcv = False
 if not from_mmcv:
 
     def single_gpu_test(model, data_loader):  # noqa: F811
@@ -43,7 +46,10 @@ if not from_mmcv:
         prog_bar = mmcv.ProgressBar(len(dataset))
         for data in data_loader:
             with torch.no_grad():
+                # print({**data})
+                #  60类动作，60维向量
                 result = model(return_loss=False, **data)
+                print(result)
             results.extend(result)
 
             # use the first key as main key to calculate the batch size
